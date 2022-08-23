@@ -4,9 +4,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- master
+- main
 
-pool: 'Default'
+pool: 'Docker'
 
 steps:
 - task: Maven@3
