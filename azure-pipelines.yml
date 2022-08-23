@@ -27,7 +27,7 @@ steps:
     mavenPomFile: 'pom.xml'
 
     publishJUnitResults: false
-
+    options: '-Dmaven.test.skip'
 
 
 - task: CopyFiles@2
