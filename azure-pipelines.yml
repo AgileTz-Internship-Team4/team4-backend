@@ -21,7 +21,7 @@ steps:
 
   inputs:
 
-    mavenPomFile: '$(Parameters.mavenPOMFile)'
+    mavenPomFile: 'pom.xml'
 
     publishJUnitResults: false
 
