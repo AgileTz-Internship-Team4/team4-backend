@@ -9,7 +9,10 @@ trigger:
 pool: 'Docker'
 
 
-
+resources:
+  containers:
+  - container: builder
+    image: mysql
 
 
 
