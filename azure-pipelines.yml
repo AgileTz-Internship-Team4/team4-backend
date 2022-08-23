@@ -8,22 +8,50 @@ trigger:
 
 pool: 'Docker'
 
+
+
+
+
+
 steps:
 
-
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '8'
-    jdkArchitectureOption: 'x64'
-
-
 - task: Maven@3
+
+  displayName: 'Maven Build Package'
+
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
+
+    mavenPomFile: '$(Parameters.mavenPOMFile)'
+
     publishJUnitResults: false
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+
+
+
+- task: CopyFiles@2
+
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+
+  inputs:
+
+    SourceFolder: '$(system.defaultworkingdirectory)'
+
+    Contents: '**/*.jar'
+
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+  condition: succeededOrFailed()
+
+
+
+- task: PublishBuildArtifacts@1
+
+  displayName: 'Publish Artifact: drop'
+
+  inputs:
+
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+
+  condition: succeededOrFailed()
+
+
+
