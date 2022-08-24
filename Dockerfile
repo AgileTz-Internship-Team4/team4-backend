@@ -1,5 +1,4 @@
 # define base image
-FROM openjdk:8 
-COPY ./productimages /productimages
+FROM openjdk:11 
 ADD target/demo-?.?*.jar demo.jar
 ENTRYPOINT [ "java", "-jar", "demo.jar" ]
