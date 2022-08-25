@@ -1,0 +1,25 @@
+app:
+  name: app
+  group: app
+  replicaCount: 1
+  container:
+    image: add-image-here
+    port: 8080
+    config: []
+    env:
+       - key: DB_PORT 
+         value:
+          number: 3306
+       - key: DB_SERVER
+         value: mysql
+       - key: DB_HOST  
+         value: mysql
+       - key: DB_NAME 
+         value: gameshop
+       - key: DB_USERNAME
+         value: root
+       - key: DB_PASSWORD 
+         value: root
+  service:
+    type: ClusterIP
+    port: 8080

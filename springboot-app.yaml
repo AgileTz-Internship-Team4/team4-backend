@@ -1,0 +1,8 @@
+app:
+  name: springboot-app
+  group: backend
+  container:
+    image: donia654/agile-spring-boot-app:latest
+    config:
+      - name: mysql-config
+   
