@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +28,17 @@ public class GameController {
         this.gameService = gameService;
     }
 // Endpoint APIS
-    @PostMapping("/add-game") // METHOD TO ADD GAME
+    @PostMapping("/game") // METHOD TO ADD GAME
     public ResponseEntity<Game> addGame(@ModelAttribute GameDTO gameDTO) throws IOException, Exception {
         return new ResponseEntity<Game>(gameService.saveGame(gameDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("getAllGames") //METHOD TO RETRIEVE ALL GAMES IN THE DATABASE
+    @GetMapping("Games") //METHOD TO RETRIEVE ALL GAMES IN THE DATABASE
     public List<Game> getAllListOfGame() {
         return gameService.getAllGames();
     }
 
-    @GetMapping("getGameById/{id}")// get game by the id
+    @GetMapping("Id/{id}")// get game by the id
     public ResponseEntity<Game> getGameById(@PathVariable("id") Long gameId) {
         try {
             return new ResponseEntity<Game>(gameService.getGameById(gameId), HttpStatus.OK);
@@ -45,5 +46,15 @@ public class GameController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
         }
+
     }
+    
+    @GetMapping("Category/{category}")
+    public List<Game> getGamesByCategory(@PathVariable("category") String category) {
+        return gameService.getAllGames().stream().filter(game -> game.getCategory().equals(category))
+                .collect(Collectors.toList());
+    }
+
+
+    
 }
