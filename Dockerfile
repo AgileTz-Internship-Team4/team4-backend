@@ -1,5 +1,9 @@
 # define base image
-FROM openjdk:11 
+FROM openjdk:11-jdk
+VOLUME /tmp
+COPY target/demo-?.?*.jar demo.jar
 EXPOSE 8080
-ADD target/demo-?.?*.jar demo.jar
+
 ENTRYPOINT [ "java", "-jar", "demo.jar" ]
+
+
