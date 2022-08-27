@@ -2,11 +2,30 @@
 app:
   name: adminer
   group: db
+  replicaCount: 1
   container:
-    image: adminer:4.7.6-standalone
+    image: adminer:latest
     port: 8080
     env:
       - key: ADMINER_DESIGN
-        value: nette
+        value: hydra
       - key: ADMINER_DEFAULT_SERVER
         value: mysql
+  
+
+  ingress:
+    name: adminer-ingress
+    enabled: true
+    annotations:
+      # nginx.ingress.kubernetes.io/app-root: /
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      ingress.kubernetes.io/hsts: "false"
+    hosts:
+      - host: adminer.agile4games.agiletz.com
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:  
+            serviceName: adminer
+            servicePort: 8080

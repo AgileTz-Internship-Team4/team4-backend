@@ -7,19 +7,29 @@ app:
     port: 8080
     config: []
     env:
-       - key: DB_PORT 
-         value:
-          number: 3306
-       - key: DB_SERVER
-         value: mysql
-       - key: DB_HOST  
-         value: mysql
-       - key: DB_NAME 
-         value: gameshop
-       - key: DB_USERNAME
-         value: root
-       - key: DB_PASSWORD 
-         value: root
+      - name: temp
+        value: temp
   service:
-    type: ClusterIP
+    type: NodePort
     port: 8080
+
+  
+  ingress:
+    name: ingress
+    # className: nginx
+    enabled: true
+    annotations:
+      # nginx.ingress.kubernetes.io/app-root: /
+      # nginx.ingress.kubernetes.io/rewrite-target: /
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      ingress.kubernetes.io/hsts: "false"
+    hosts:
+      - host: host
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            serviceName: games-api
+            servicePort: 8080
+    

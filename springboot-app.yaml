@@ -3,6 +3,38 @@ app:
   group: backend
   container:
     image: donia654/agile-spring-boot-app:latest
+    port: 8080
     config:
       - name: mysql-config
-   
+    env:
+      - key: DB_PORT
+        number: 3306
+      - key: DB_SERVER
+        value: mysql
+      - key: DB_HOST  
+        value: mysql
+      - key: DB_NAME 
+        value: gameshop
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD 
+        value: root
+  
+
+  ingress:
+    name: api-ingress
+    enabled: true
+    annotations:
+      # nginx.ingress.kubernetes.io/app-root: /games-api
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      ingress.kubernetes.io/hsts: "false"
+    hosts:
+      - host: api.agile4games.agiletz.com
+        
+        paths: 
+        - path: /
+          pathType: Prefix
+          backend:
+            serviceName: springboot-app
+            servicePort: 8080
